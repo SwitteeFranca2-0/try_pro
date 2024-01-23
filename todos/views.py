@@ -12,18 +12,21 @@ class IndexView(generic.ListView):
         return Todo.objects.order_by('-created_at')
 
 def add(request):
+    """Add to-do event"""
     title = request.POST['title']
     Todo.objects.create(title=title)
 
     return redirect('todos:index')
 
 def delete(request, todo_id):
+    """Delete to-do event"""
     todo = get_object_or_404(Todo, pk=todo_id)
     todo.delete()
 
     return redirect('todos:index')
 
 def update(request, todo_id):
+    """Update to-do list"""
     todo = get_object_or_404(Todo, pk=todo_id)
     isCompleted = request.POST.get('isCompleted', False)
     if isCompleted == 'on':
